@@ -1,0 +1,64 @@
+Question1: You are given an array x of string elements along with an int variable n that contains the number of elements in the array. You are also given a string variable mode that has been declared. Assign to mode the mode value of the array. (Assume there are no "ties".)
+
+NOTE: The mode is the value that occurs most frequently.
+
+EXAMPLE: Given "msft" "appl" "msft" "csco" "ibm" "csco" "msft", the mode is "msft" because it appears the most number of times in the list.
+int countPrev=0;
+
+
+
+for (int j=0; j<n; j++)       
+{
+  if (x[0]==x[j])
+  countPrev++;       
+}                            //第一个数和其他数进行比较的结果
+int count=0;                  //count是作为每一个循环完和上一个循环进行比较的计数
+for (int i=0; i<n; i++)      //nested loop就可以让每一个数都和其他数进行比较
+{
+  for (int j=0; j<n; j++) 
+  {
+     if (x[i]==x[j])        
+     count++;
+  }
+if (countPrev>count)              //这里的countPrev是上一次循环的计数(默认是第一个数的比较结果）count也就是进行一轮循环之后的计数
+mode=x[i-1];                      //很好理解如果前一个数比后一个数大那么前一个就是众数
+else
+mode=x[i];                        //同理
+
+countPrev=count;                  //将countPrev赋上这次循环结果的数值 作为下一次循环的比较计数
+count = 0 ;                       //reset count
+}
+
+Question2: You are given an array x of int elements along with an int variable n that contains the number of elements in the array. There are no duplicates in this array. You are also given an int variable m that has been declared. Assign to m the median value of the array.
+
+NOTE: The median of a set of numbers is the number in the set such that there are as many numbers above that value as there are below. If the set has an even number of members, the median is the average of the pair of numbers such that there are as many numbers above the pair as there are below.
+
+EXAMPLE 1: Given 5 8 1 9 7 the median is 7 because there are two numbers below (1 5) and two numbers above (8 9).
+
+EXAMPLE 2: Given 3 7 1 4 6 9 the median is the average of 4 and 6 because there are two numbers above 4 and 6 (7 9) and two numbers below (3 1).
+
+for(int i=0;i<n;i++)
+{
+	int swap;
+	for(int j=i+1;j<n;j++)
+	{
+		if(x[i]>x[j])
+	{
+		swap=x[i];
+		x[i]=x[j];
+		x[j]=swap;
+	}
+	}
+}//将数组从小到大重新排列
+
+if(n%2==0)  //判断数组长度的奇偶性
+{
+	int n1=x[(n/2)-1];//偶数中位数的计算公式是(n/2+(n/2+1))/2，但是要注意数组的index是从0开始的所以这里要-1
+	int n2=x[n/2];		
+	m=(n1+n2)/2;
+}
+else
+{
+	int n1=x[n/2];//同理
+	m=n1;
+}
